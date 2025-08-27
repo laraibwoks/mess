@@ -1,0 +1,36 @@
+
+{% extends "base.html" %}
+{% block content %}
+<h4>Daily Report</h4>
+<form method="GET" class="row g-2 align-items-end mb-3">
+  <div class="col-auto">
+    <label class="form-label">Date</label>
+    <input type="date" class="form-control" name="date" value="{{ selected_date }}">
+  </div>
+  <div class="col-auto">
+    <button class="btn btn-primary" type="submit">Load</button>
+  </div>
+  <div class="col-auto">
+    <a class="btn btn-outline-success" href="{{ url_for('export_csv', date=selected_date) }}">Export CSV</a>
+  </div>
+</form>
+
+<p><b>Taken:</b> {{ taken }} / {{ total }}</p>
+
+<div class="table-fixed">
+<table class="table table-sm table-striped">
+  <thead><tr><th>Roll No</th><th>Name</th><th>Hostel</th><th>Batch</th><th>Taken</th></tr></thead>
+  <tbody>
+  {% for r in rows %}
+    <tr>
+      <td>{{ r["roll_no"] }}</td>
+      <td>{{ r["name"] }}</td>
+      <td>{{ r["hostel"] }}</td>
+      <td>{{ r["batch"] }}</td>
+      <td>{% if r["taken"] == 1 %}✅{% else %}❌{% endif %}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}
